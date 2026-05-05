@@ -5,18 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mopelany</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
 :root{
     --main:#a7d1df;
     --bg:#eaf6fb;
-    --text:#111;
+    --text:#0d0d0d;
 }
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family: Arial, sans-serif;
+    font-family:'Inter',sans-serif;
 }
 
 body{
@@ -24,112 +26,115 @@ body{
     color:var(--text);
     overflow-x:hidden;
     opacity:0;
-    filter:blur(8px);
-    transition:opacity 1s ease, filter 1s ease;
+    transform:scale(1.03);
+    transition:1.2s cubic-bezier(.22,1,.36,1);
 }
 
 body.show{
     opacity:1;
-    filter:blur(0);
+    transform:scale(1);
 }
 
 #loader{
     position:fixed;
-    width:100%;
-    height:100%;
+    inset:0;
     background:var(--bg);
     display:flex;
     justify-content:center;
     align-items:center;
     flex-direction:column;
     z-index:999;
-    opacity:1;
-    transition:opacity 1s ease;
+    transition:1s;
 }
 
 #loader.hide{
     opacity:0;
+    transform:scale(1.1);
 }
 
 .loader-logo{
-    width:120px;
-    height:120px;
+    width:140px;
+    height:140px;
     border-radius:50%;
     border:3px solid var(--main);
     object-fit:cover;
     margin-bottom:30px;
-    opacity:0;
-    animation:logoFade 0.8s ease forwards;
-    animation-delay:0.3s;
+    animation:float 2s ease-in-out infinite;
 }
 
-@keyframes logoFade{
-    to{opacity:1;}
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-12px)}
 }
 
 .loader-bar{
-    width:220px;
+    width:260px;
     height:2px;
-    background:#dbeef5;
+    background:#dceff6;
     overflow:hidden;
-    opacity:0;
-    animation:fadeBar 0.5s forwards;
-    animation-delay:0.6s;
-}
-
-@keyframes fadeBar{
-    to{opacity:1;}
 }
 
 .loader-bar-inner{
     width:40%;
     height:100%;
     background:var(--main);
-    animation:loadMove 1.4s ease infinite;
-    animation-delay:0.6s;
+    animation:bar 1.4s ease infinite;
 }
 
-@keyframes loadMove{
+@keyframes bar{
     0%{transform:translateX(-120%)}
     100%{transform:translateX(300%)}
 }
 
 header{
-    padding:25px 60px;
+    position:fixed;
+    width:100%;
+    top:0;
+    left:0;
+    padding:20px 60px;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    backdrop-filter:blur(12px);
+    background:rgba(255,255,255,0.5);
+    z-index:10;
 }
 
 .logo img{
-    width:80px;
-    height:80px;
+    width:75px;
+    height:75px;
     border-radius:50%;
-    border:3px solid var(--main);
+    border:2px solid var(--main);
+    transition:0.4s;
+}
+
+.logo img:hover{
+    transform:scale(1.1);
 }
 
 .hero{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
     text-align:center;
-    padding:140px 20px;
+}
+
+.hero h1{
+    font-size:58px;
 }
 
 .hero h1 span{
     display:inline-block;
     opacity:0;
-    transform:translateY(40px);
-    animation:reveal 0.8s forwards;
+    transform:translateY(60px);
+    animation:reveal 1s forwards;
 }
 
 .hero h1 span:nth-child(2){animation-delay:0.2s}
 .hero h1 span:nth-child(3){animation-delay:0.4s}
 .hero h1 span:nth-child(4){animation-delay:0.6s}
-
-.hero p{
-    margin-top:15px;
-    color:#555;
-    opacity:0;
-    animation:fadeIn 1s 1s forwards;
-}
 
 @keyframes reveal{
     to{
@@ -138,92 +143,111 @@ header{
     }
 }
 
-@keyframes fadeIn{
+.hero p{
+    margin-top:20px;
+    color:#555;
+    opacity:0;
+    animation:fade 1s 1s forwards;
+}
+
+@keyframes fade{
     to{opacity:1}
 }
 
 .section{
-    padding:100px 40px;
+    padding:120px 20px;
     text-align:center;
-    opacity:0;
-    transform:translateY(60px);
-    transition:1s cubic-bezier(.22,1,.36,1);
 }
 
-.section.show{
+.title{
+    font-size:34px;
+    margin-bottom:30px;
+    opacity:0;
+    transform:translateY(50px);
+    transition:0.9s cubic-bezier(.22,1,.36,1);
+}
+
+.title.show{
     opacity:1;
     transform:translateY(0);
 }
 
-.card{
-    max-width:500px;
+.text-block{
+    max-width:750px;
     margin:auto;
-    border-radius:16px;
-    padding:30px;
-    border:1px solid #eee;
+    line-height:1.8;
+    color:#444;
+    opacity:0;
+    transform:translateY(50px);
+    transition:1s cubic-bezier(.22,1,.36,1);
+}
+
+.text-block.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.cards{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+    margin-top:50px;
+}
+
+.card{
+    width:300px;
+    padding:35px;
     background:white;
-    transition:0.4s;
+    border-radius:18px;
+    opacity:0;
+    transform:translateY(70px) scale(0.95);
+    transition:0.6s cubic-bezier(.22,1,.36,1);
+}
+
+.card.show{
+    opacity:1;
+    transform:translateY(0) scale(1);
 }
 
 .card:hover{
-    transform:translateY(-10px) scale(1.02);
-    box-shadow:0 20px 40px rgba(0,0,0,0.08);
+    transform:translateY(-14px) scale(1.04);
+    box-shadow:0 30px 60px rgba(0,0,0,0.08);
 }
 
-.price{
-    margin:15px 0;
-    color:var(--main);
-    font-size:18px;
+.pricing-card{
+    display:inline-block;
+    background:white;
+    padding:45px;
+    border-radius:24px;
+    opacity:0;
+    transform:translateY(60px);
+    transition:0.7s cubic-bezier(.22,1,.36,1);
+}
+
+.pricing-card.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
 .btn{
-    padding:12px 25px;
-    background:var(--main);
+    margin-top:25px;
+    padding:14px 35px;
     border:none;
-    border-radius:25px;
+    border-radius:30px;
+    background:var(--main);
     color:white;
     cursor:pointer;
+    transition:0.3s;
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:30px;
-    margin-top:40px;
+.btn:hover{
+    transform:scale(1.1);
 }
 
-.box{
-    padding:25px;
-    border-radius:12px;
-    background:white;
-    transition:0.4s;
-}
-
-.box:hover{
-    transform:translateY(-8px);
-}
-
-footer{
-    margin-top:100px;
-    padding:60px;
-    background:#dff1f7;
-}
-
-.footer-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:20px;
-}
-
-.lang-switch{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:white;
-    border:1px solid #ddd;
-    padding:8px 12px;
-    border-radius:20px;
-    cursor:pointer;
+.parallax{
+    transform:translateY(0);
+    transition:transform 0.2s linear;
 }
 </style>
 </head>
@@ -243,7 +267,7 @@ footer{
     </div>
 </header>
 
-<section class="hero">
+<section class="hero parallax">
     <h1>
         <span>Mopelany</span>
         <span>Anti</span>
@@ -254,46 +278,62 @@ footer{
 </section>
 
 <section class="section">
-    <h2>About Product</h2>
-    <p>High quality anti-acne serum designed to reduce pimples and improve clarity.</p>
-</section>
-
-<section class="section">
-    <h2>Benefits</h2>
-    <div class="grid">
-        <div class="box">Reduce acne</div>
-        <div class="box">Smooth skin</div>
-        <div class="box">Brighten face</div>
+    <h2 class="title">Product Science</h2>
+    <div class="text-block">
+        สิว (Acne vulgaris) เป็นภาวะอักเสบเรื้อรังของผิวหนังที่มีพยาธิกำเนิดหลายปัจจัย ประกอบด้วยการทำงานของต่อมไขมัน ความผิดปกติของการผลัดเซลล์ผิว การเพิ่มจำนวนของเชื้อ Cutibacterium acnes และกระบวนการอักเสบระดับเซลล์
     </div>
 </section>
 
 <section class="section">
-    <h2>Pricing</h2>
-    <div class="card">
-        <div class="price">
-            1 bottle: 275฿ <br>
-            2 bottles: 520฿ <br>
-            3 bottles: 699฿
+    <h2 class="title">Active Complex</h2>
+    <div class="cards">
+        <div class="card">
+            <h3>AcneBusters®</h3>
+            <p>ควบคุมการทำงานของต่อมไขมัน ลดการอักเสบ และยับยั้งแบคทีเรีย</p>
         </div>
+        <div class="card">
+            <h3>Encap Salicylic</h3>
+            <p>ซาลิไซลิกนาโน ลดการอุดตัน ผลัดเซลล์อย่างสม่ำเสมอ</p>
+        </div>
+        <div class="card">
+            <h3>OUBAKU Extract</h3>
+            <p>ลดเชื้อสิว ลดการอักเสบ และรักษาสมดุลผิว</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="title">Synergistic Effect</h2>
+    <div class="text-block">
+        การทำงานร่วมกันของสารสำคัญช่วยควบคุมสิวทุกระดับ ลดโอกาสการเกิดซ้ำในระยะยาว
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="title">Pricing</h2>
+    <div class="pricing-card">
+        <div>1 bottle — 275฿</div>
+        <div>2 bottles — 520฿</div>
+        <div>3 bottles — 699฿</div>
         <button class="btn">Buy Now</button>
     </div>
 </section>
+<footer class="section">
+    <h2 class="title">Contact</h2>
+    <div class="text-block">
+        093-103-7501<br>
+        mopelany.p@gmail.com
+    </div>
 
-<footer>
-    <div class="footer-grid">
-        <div>
-            <b>CONTACT</b>
-            <p>093-103-7501</p>
-            <p>mopelany.p@gmail.com</p>
-        </div>
-        <div>
-            <b>PRODUCT</b>
-            <p>Anti Acne Serum</p>
-        </div>
+    <div class="cards">
+        <div class="card"><a href="https://www.facebook.com/share/18n7NXBFBJ/?mibextid=wwXIfr">Facebook</a></div>
+        <div class="card"><a href="https://th.shp.ee/tNYukGMe">Shopee</a></div>
+        <div class="card"><a href="https://www.tiktok.com/@mopelany.p">TikTok</a></div>
+        <div class="card"><a href="https://www.instagram.com/mopelany">Instagram</a></div>
     </div>
 </footer>
 
-<div class="lang-switch">ENG | ไทย</div>
+<div class="lang-switch" id="langSwitch">ENG | ไทย</div>
 
 <script>
 window.onload = () => {
@@ -303,16 +343,48 @@ window.onload = () => {
     },3200);
 };
 
-const sections = document.querySelectorAll('.section');
+const elements = document.querySelectorAll('.title, .text-block, .card, .pricing-card');
 
 window.addEventListener('scroll', ()=>{
-    sections.forEach(el=>{
+    elements.forEach(el=>{
         const top = el.getBoundingClientRect().top;
-        if(top < window.innerHeight - 100){
+        if(top < window.innerHeight - 80){
             el.classList.add('show');
         }
     });
+
+    document.querySelectorAll('.parallax').forEach(el=>{
+        let offset = window.scrollY * 0.2;
+        el.style.transform = `translateY(${offset}px)`;
+    });
 });
+
+const btns = document.querySelectorAll('.btn');
+
+btns.forEach(btn=>{
+    btn.addEventListener('mousemove', e=>{
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width/2;
+        const y = e.clientY - rect.top - rect.height/2;
+        btn.style.transform = `translate(${x*0.1}px, ${y*0.1}px) scale(1.08)`;
+    });
+
+    btn.addEventListener('mouseleave', ()=>{
+        btn.style.transform = 'scale(1)';
+    });
+});
+
+let isThai = false;
+
+document.getElementById("langSwitch").onclick = ()=>{
+    isThai = !isThai;
+
+    if(isThai){
+        document.querySelector('.hero p').innerText = "ผิวใสเริ่มต้นที่นี่";
+    }else{
+        document.querySelector('.hero p').innerText = "Clear skin starts here";
+    }
+};
 </script>
 
 </body>
