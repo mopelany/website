@@ -26,14 +26,15 @@ body{
     color:var(--text);
     overflow-x:hidden;
     opacity:0;
-    transition:1s;
+    transform:scale(1.03);
+    transition:1.2s cubic-bezier(.22,1,.36,1);
 }
 
 body.show{
     opacity:1;
+    transform:scale(1);
 }
 
-/* LOADER */
 #loader{
     position:fixed;
     inset:0;
@@ -52,16 +53,22 @@ body.show{
 }
 
 .loader-logo{
-    width:110px;
-    height:110px;
+    width:130px;
+    height:130px;
     border-radius:50%;
     border:2px solid var(--main);
     object-fit:cover;
-    margin-bottom:20px;
+    margin-bottom:25px;
+    animation:float 2s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-12px)}
 }
 
 .loader-bar{
-    width:200px;
+    width:240px;
     height:2px;
     background:#dceff6;
     overflow:hidden;
@@ -71,7 +78,7 @@ body.show{
     width:40%;
     height:100%;
     background:var(--main);
-    animation:bar 1s linear infinite;
+    animation:bar 1.2s linear infinite;
 }
 
 @keyframes bar{
@@ -79,7 +86,6 @@ body.show{
     100%{transform:translateX(250%)}
 }
 
-/* TOP PROGRESS */
 .top-bar{
     position:fixed;
     top:0;
@@ -90,12 +96,11 @@ body.show{
     z-index:1000;
 }
 
-/* NAV */
 header{
     position:fixed;
     top:0;
     width:100%;
-    padding:10px 40px;
+    padding:12px 50px;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -105,15 +110,15 @@ header{
 }
 
 .logo img{
-    width:55px;
-    height:55px;
+    width:60px;
+    height:60px;
     border-radius:50%;
     border:2px solid var(--main);
 }
 
 .nav{
     display:flex;
-    gap:20px;
+    gap:25px;
 }
 
 .nav button{
@@ -121,9 +126,13 @@ header{
     border:none;
     cursor:pointer;
     font-size:14px;
+    transition:0.3s;
 }
 
-/* HERO */
+.nav button:hover{
+    opacity:0.6;
+}
+
 .hero{
     height:100vh;
     display:flex;
@@ -134,60 +143,105 @@ header{
 }
 
 .hero h1{
-    font-size:50px;
+    font-size:56px;
 }
 
+.hero p{
+    margin-top:15px;
+    color:#555;
+}
 .section{
-    padding:100px 20px;
+    padding:110px 20px;
     text-align:center;
 }
 
 .title{
-    font-size:30px;
-    margin-bottom:20px;
+    font-size:34px;
+    margin-bottom:25px;
+    opacity:0;
+    transform:translateY(50px);
+    transition:0.9s cubic-bezier(.22,1,.36,1);
+}
+
+.title.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
 .text{
-    max-width:700px;
+    max-width:750px;
     margin:auto;
+    line-height:1.8;
     color:#444;
-    line-height:1.7;
+    opacity:0;
+    transform:translateY(50px);
+    transition:1s cubic-bezier(.22,1,.36,1);
+}
+
+.text.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
 .cards{
     display:flex;
     flex-wrap:wrap;
     justify-content:center;
-    gap:20px;
-    margin-top:30px;
+    gap:30px;
+    margin-top:40px;
 }
 
 .card{
-    width:260px;
+    width:280px;
+    padding:30px;
     background:white;
-    padding:25px;
-    border-radius:14px;
+    border-radius:18px;
+    opacity:0;
+    transform:translateY(70px) scale(0.95);
+    transition:0.6s cubic-bezier(.22,1,.36,1);
 }
 
-.pricing{
-    background:white;
+.card.show{
+    opacity:1;
+    transform:translateY(0) scale(1);
+}
+
+.card:hover{
+    transform:translateY(-14px) scale(1.04);
+    box-shadow:0 30px 60px rgba(0,0,0,0.08);
+}
+
+.pricing-box{
     display:inline-block;
-    padding:30px;
-    border-radius:16px;
+    background:white;
+    padding:45px;
+    border-radius:22px;
+    opacity:0;
+    transform:translateY(60px);
+    transition:0.7s cubic-bezier(.22,1,.36,1);
+}
+
+.pricing-box.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
 .btn{
-    margin-top:20px;
-    padding:10px 25px;
+    margin-top:25px;
+    padding:14px 35px;
     border:none;
+    border-radius:30px;
     background:var(--main);
     color:white;
-    border-radius:20px;
     cursor:pointer;
+    transition:0.3s;
 }
 
-/* LANG SWITCH */
-.lang{
+.btn:hover{
+    transform:scale(1.1);
+}
+
+.lang-switch{
     position:fixed;
     bottom:20px;
     right:20px;
@@ -205,7 +259,9 @@ header{
 
 <div id="loader">
     <img class="loader-logo" src="https://raw.githubusercontent.com/mopelany/website/refs/heads/main/assets/picture/MPLN_LOGO_WHITE.jpg">
-    <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+    <div class="loader-bar">
+        <div class="loader-bar-inner"></div>
+    </div>
 </div>
 
 <div class="top-bar" id="topBar"></div>
@@ -216,11 +272,11 @@ header{
     </div>
 
     <div class="nav">
-        <button onclick="scrollToId('hero')">Home</button>
-        <button onclick="scrollToId('science')">Science</button>
-        <button onclick="scrollToId('active')">Active</button>
-        <button onclick="scrollToId('price')">Price</button>
-        <button onclick="scrollToId('contact')">Contact</button>
+        <button onclick="scrollToId('hero')" id="navHome">Home</button>
+        <button onclick="scrollToId('science')" id="navScience">Science</button>
+        <button onclick="scrollToId('active')" id="navActive">Active</button>
+        <button onclick="scrollToId('price')" id="navPrice">Price</button>
+        <button onclick="scrollToId('contact')" id="navContact">Contact</button>
     </div>
 </header>
 
@@ -230,49 +286,68 @@ header{
 </section>
 
 <section class="section" id="science">
-    <h2 class="title">Product Science</h2>
+    <h2 class="title" id="scienceTitle">Product Science</h2>
     <div class="text" id="scienceText">
-        Acne is a chronic inflammatory condition involving sebum, bacteria, and skin cell turnover.
+        Acne is a chronic inflammatory skin condition involving sebum production, keratinization, bacterial growth, and inflammation processes.
     </div>
 </section>
 
 <section class="section" id="active">
-    <h2 class="title">Active Complex</h2>
+    <h2 class="title" id="activeTitle">Active Complex</h2>
+
     <div class="cards">
-        <div class="card">AcneBusters®</div>
-        <div class="card">Encap Salicylic</div>
-        <div class="card">OUBAKU Extract</div>
+        <div class="card">
+            <h3 id="a1">AcneBusters®</h3>
+            <p id="a1t">Controls sebum, reduces inflammation, and targets acne bacteria.</p>
+        </div>
+
+        <div class="card">
+            <h3 id="a2">Encap Salicylic</h3>
+            <p id="a2t">Nano salicylic acid penetrates pores and removes blockage gently.</p>
+        </div>
+
+        <div class="card">
+            <h3 id="a3">OUBAKU Extract</h3>
+            <p id="a3t">Reduces acne bacteria and inflammation without harming skin microbiome.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="effect">
+    <h2 class="title" id="effectTitle">Synergistic Effect</h2>
+    <div class="text" id="effectText">
+        Combined ingredients target all acne causes including oil glands, pores, bacteria, and inflammation for long-term results.
     </div>
 </section>
 
 <section class="section" id="price">
-    <h2 class="title">Pricing</h2>
-    <div class="pricing">
+    <h2 class="title" id="priceTitle">Pricing</h2>
+
+    <div class="pricing-box">
         <div id="priceText">
             1 bottle — 275฿ <br>
             2 bottles — 520฿ <br>
             3 bottles — 699฿
         </div>
-        <button class="btn">Buy Now</button>
+        <button class="btn" id="buyBtn">Buy Now</button>
     </div>
 </section>
 
 <section class="section" id="contact">
-    <h2 class="title">Contact</h2>
-    <div class="text">
-        093-103-7501<br>
-        mopelany.p@gmail.com
+    <h2 class="title" id="contactTitle">Contact</h2>
+    <div class="text" id="contactText">
+        Phone: 093-103-7501 <br>
+        Email: mopelany.p@gmail.com
     </div>
 </section>
 
-<div class="lang" onclick="toggleLang()">ENG | ไทย</div>
-
+<div class="lang-switch" id="langSwitch">ENG | ไทย</div>
 <script>
 window.onload = ()=>{
     setTimeout(()=>{
         document.getElementById("loader").classList.add("hide");
         document.body.classList.add("show");
-    },1200);
+    },1500);
 };
 
 function scrollToId(id){
@@ -283,25 +358,79 @@ window.addEventListener("scroll", ()=>{
     let scroll = window.scrollY;
     let height = document.body.scrollHeight - window.innerHeight;
     document.getElementById("topBar").style.width = (scroll/height)*100 + "%";
+
+    document.querySelectorAll('.title, .text, .card, .pricing-box').forEach(el=>{
+        let top = el.getBoundingClientRect().top;
+        if(top < window.innerHeight - 80){
+            el.classList.add("show");
+        }
+    });
 });
 
-let thai=false;
+let thai = false;
 
-function toggleLang(){
-    thai=!thai;
+document.getElementById("langSwitch").onclick = ()=>{
+    thai = !thai;
 
     if(thai){
+
+        document.getElementById("navHome").innerText="หน้าแรก";
+        document.getElementById("navScience").innerText="ข้อมูล";
+        document.getElementById("navActive").innerText="สารสำคัญ";
+        document.getElementById("navPrice").innerText="ราคา";
+        document.getElementById("navContact").innerText="ติดต่อ";
+
         document.getElementById("title").innerText="เซรั่มรักษาสิว Mopelany";
         document.getElementById("subtitle").innerText="ผิวใสเริ่มต้นที่นี่";
-        document.getElementById("scienceText").innerText="สิวเป็นภาวะอักเสบของผิวหนังที่เกี่ยวข้องกับต่อมไขมันและแบคทีเรีย";
+
+        document.getElementById("scienceTitle").innerText="ข้อมูลผลิตภัณฑ์";
+        document.getElementById("scienceText").innerText="สิวเป็นภาวะอักเสบเรื้อรังของผิวหนังที่เกี่ยวข้องกับต่อมไขมัน การผลัดเซลล์ และแบคทีเรีย";
+
+        document.getElementById("activeTitle").innerText="สารสำคัญ";
+        document.getElementById("a1t").innerText="ควบคุมความมัน ลดการอักเสบ และยับยั้งแบคทีเรีย";
+        document.getElementById("a2t").innerText="ซาลิไซลิกนาโนช่วยลดการอุดตันอย่างอ่อนโยน";
+        document.getElementById("a3t").innerText="ลดเชื้อสิวโดยไม่ทำลายสมดุลผิว";
+
+        document.getElementById("effectTitle").innerText="การทำงานร่วมกัน";
+        document.getElementById("effectText").innerText="ช่วยลดสิวทุกระดับ ทั้งต่อมไขมัน รูขุมขน แบคทีเรีย และการอักเสบ";
+
+        document.getElementById("priceTitle").innerText="ราคา";
         document.getElementById("priceText").innerHTML="1 ขวด — 275฿<br>2 ขวด — 520฿<br>3 ขวด — 699฿";
+        document.getElementById("buyBtn").innerText="สั่งซื้อ";
+
+        document.getElementById("contactTitle").innerText="ติดต่อ";
+        document.getElementById("contactText").innerHTML="โทร: 093-103-7501<br>อีเมล: mopelany.p@gmail.com";
+
     }else{
+
+        document.getElementById("navHome").innerText="Home";
+        document.getElementById("navScience").innerText="Science";
+        document.getElementById("navActive").innerText="Active";
+        document.getElementById("navPrice").innerText="Price";
+        document.getElementById("navContact").innerText="Contact";
+
         document.getElementById("title").innerText="Mopelany Anti Acne Serum";
         document.getElementById("subtitle").innerText="Clear skin starts here";
-        document.getElementById("scienceText").innerText="Acne is a chronic inflammatory condition involving sebum, bacteria, and skin cell turnover.";
+
+        document.getElementById("scienceTitle").innerText="Product Science";
+        document.getElementById("scienceText").innerText="Acne is a chronic inflammatory skin condition involving sebum production, keratinization, bacterial growth, and inflammation processes.";
+
+        document.getElementById("activeTitle").innerText="Active Complex";
+        document.getElementById("a1t").innerText="Controls sebum, reduces inflammation, and targets acne bacteria.";
+        document.getElementById("a2t").innerText="Nano salicylic acid penetrates pores and removes blockage gently.";
+        document.getElementById("a3t").innerText="Reduces acne bacteria and inflammation without harming skin microbiome.";
+
+        document.getElementById("effectTitle").innerText="Synergistic Effect";
+        document.getElementById("effectText").innerText="Combined ingredients target all acne causes including oil glands, pores, bacteria, and inflammation.";
+
+        document.getElementById("priceTitle").innerText="Pricing";
         document.getElementById("priceText").innerHTML="1 bottle — 275฿<br>2 bottles — 520฿<br>3 bottles — 699฿";
+        document.getElementById("buyBtn").innerText="Buy Now";
+
+        document.getElementById("contactTitle").innerText="Contact";
+        document.getElementById("contactText").innerHTML="Phone: 093-103-7501<br>Email: mopelany.p@gmail.com";
     }
-}
+};
 </script>
 
 </body>
