@@ -1,1 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mopelany</title>
 
+<style>
+:root{
+    --main:#a7d1df;
+    --bg:#ffffff;
+    --text:#111;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+}
+
+#loader{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.loader-circle{
+    width:60px;
+    height:60px;
+    border:6px solid #ddd;
+    border-top:6px solid var(--main);
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    0%{transform:rotate(0)}
+    100%{transform:rotate(360deg)}
+}
+
+header{
+    padding:20px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo img{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.hero{
+    text-align:center;
+    padding:60px 20px;
+}
+
+.hero h1{
+    font-size:36px;
+}
+
+.hero p{
+    margin-top:10px;
+    color:#555;
+}
+
+.products{
+    padding:40px;
+    text-align:center;
+}
+
+.product-card{
+    border:1px solid #eee;
+    padding:20px;
+    border-radius:12px;
+    max-width:400px;
+    margin:auto;
+}
+
+.product-card h2{
+    margin-bottom:10px;
+}
+
+.price{
+    margin:10px 0;
+    color:var(--main);
+}
+
+.socials{
+    margin-top:20px;
+}
+
+.socials a{
+    margin:0 10px;
+    text-decoration:none;
+    color:black;
+}
+
+footer{
+    margin-top:60px;
+    padding:40px;
+    background:#f7f7f7;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+}
+
+.footer-title{
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.lang-switch{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:white;
+    border:1px solid #ddd;
+    padding:8px 12px;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+.btn{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    background:var(--main);
+    color:white;
+    border-radius:20px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+    <div class="loader-circle"></div>
+</div>
+
+<header>
+    <div class="logo">
+        <img src="https://raw.githubusercontent.com/mopelany/website/refs/heads/main/assets/picture/MPLN_LOGO_WHITE.jpg" alt="logo">
+        <h2>Mopelany</h2>
+    </div>
+</header>
+
+<section class="hero">
+    <h1 id="title">Mopelany Anti Acne Serum</h1>
+    <p id="subtitle">Clear skin starts here</p>
+</section>
+
+<section class="products">
+    <div class="product-card">
+        <h2>Mopelany Complete Anti Acne Serum</h2>
+
+        <div class="price" id="price">
+            1 bottle: 275฿ <br>
+            2 bottles: 520฿ <br>
+            3 bottles: 699฿
+        </div>
+
+        <p id="time">Open daily 10:00 - 16:00</p>
+
+        <button class="btn">Buy Now</button>
+
+        <div class="socials">
+            <a href="https://www.facebook.com/share/18n7NXBFBJ/?mibextid=wwXIfr">Facebook</a>
+            <a href="https://th.shp.ee/tNYukGMe">Shopee</a>
+            <a href="https://www.tiktok.com/@mopelany.p">TikTok</a>
+            <a href="https://www.instagram.com/mopelany">Instagram</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-grid">
+        <div>
+            <div class="footer-title">CONTACT</div>
+            <p>093-103-7501</p>
+            <p>mopelany.p@gmail.com</p>
+        </div>
+
+        <div>
+            <div class="footer-title">PRODUCT</div>
+            <p>Anti Acne Serum</p>
+        </div>
+
+        <div>
+            <div class="footer-title">HELP</div>
+            <p>Contact Us</p>
+            <p>Returns</p>
+        </div>
+    </div>
+</footer>
+
+<div class="lang-switch" onclick="toggleLang()">
+    ENG | ไทย
+</div>
+
+<script>
+window.onload = () => {
+    setTimeout(()=>{
+        document.getElementById("loader").style.display="none";
+    },1000);
+};
+
+let isThai = false;
+
+function toggleLang(){
+    isThai = !isThai;
+
+    if(isThai){
+        document.getElementById("title").innerText = "เซรั่มรักษาสิว Mopelany";
+        document.getElementById("subtitle").innerText = "ผิวใสเริ่มต้นที่นี่";
+        document.getElementById("price").innerHTML = `
+        1 ขวด: 275฿ <br>
+        2 ขวด: 520฿ <br>
+        3 ขวด: 699฿`;
+        document.getElementById("time").innerText = "เปิดทุกวัน 10:00 - 16:00";
+    }else{
+        document.getElementById("title").innerText = "Mopelany Anti Acne Serum";
+        document.getElementById("subtitle").innerText = "Clear skin starts here";
+        document.getElementById("price").innerHTML = `
+        1 bottle: 275฿ <br>
+        2 bottles: 520฿ <br>
+        3 bottles: 699฿`;
+        document.getElementById("time").innerText = "Open daily 10:00 - 16:00";
+    }
+}
+</script>
+
+</body>
+</html>
