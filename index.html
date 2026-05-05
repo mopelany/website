@@ -372,8 +372,15 @@ let currentLang = null;
 
 function setLang(lang){
     currentLang = lang;
+
     document.getElementById("langSelect").style.display = "none";
-    document.getElementById("loader").classList.add("show");
+
+    const loader = document.getElementById("loader");
+    loader.classList.remove("hide");
+    loader.classList.add("show");
+
+    document.body.classList.add("show");
+
     startSite();
 }
 
@@ -382,7 +389,6 @@ function startSite(){
 
     setTimeout(()=>{
         document.getElementById("loader").classList.add("hide");
-        document.body.classList.add("show");
     },1500);
 }
 
@@ -467,6 +473,11 @@ function applyLang(){
         document.getElementById("contactText").innerHTML="Phone: 093-103-7501<br>Email: mopelany.p@gmail.com";
     }
 }
+setTimeout(()=>{
+    if(!currentLang){
+        document.body.classList.add("show");
+    }
+},2000);
 </script>
 
 </body>
