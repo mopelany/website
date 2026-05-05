@@ -23,6 +23,12 @@ body{
     background:var(--bg);
     color:var(--text);
     overflow-x:hidden;
+    opacity:0;
+    transition:opacity 0.8s ease;
+}
+
+body.show{
+    opacity:1;
 }
 
 #loader{
@@ -35,6 +41,13 @@ body{
     align-items:center;
     z-index:999;
     flex-direction:column;
+    opacity:1;
+    transition:opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#loader.hide{
+    opacity:0;
+    visibility:hidden;
 }
 
 .loader-logo{
@@ -277,9 +290,9 @@ footer{
 <script>
 window.onload = () => {
     setTimeout(()=>{
-        document.getElementById("loader").style.opacity="0";
-        setTimeout(()=>{document.getElementById("loader").style.display="none";},500);
-    },1200);
+        document.getElementById("loader").classList.add("hide");
+        document.body.classList.add("show");
+    },1000);
 };
 
 const faders = document.querySelectorAll('.fade');
