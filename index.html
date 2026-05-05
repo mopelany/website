@@ -22,6 +22,7 @@
 body{
     background:var(--bg);
     color:var(--text);
+    overflow-x:hidden;
 }
 
 #loader{
@@ -33,13 +34,24 @@ body{
     justify-content:center;
     align-items:center;
     z-index:999;
+    flex-direction:column;
+}
+
+.loader-logo{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    border:3px solid var(--main);
+    object-fit:cover;
+    margin-bottom:20px;
+    animation:fadeIn 1s ease;
 }
 
 .loader-circle{
-    width:60px;
-    height:60px;
-    border:6px solid #ddd;
-    border-top:6px solid var(--main);
+    width:50px;
+    height:50px;
+    border:5px solid #ddd;
+    border-top:5px solid var(--main);
     border-radius:50%;
     animation:spin 1s linear infinite;
 }
@@ -49,76 +61,96 @@ body{
     100%{transform:rotate(360deg)}
 }
 
+@keyframes fadeIn{
+    from{opacity:0; transform:scale(0.8);}
+    to{opacity:1; transform:scale(1);}
+}
+
 header{
-    padding:20px 40px;
+    padding:25px 60px;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
 
-.logo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
 .logo img{
-    width:50px;
-    height:50px;
+    width:70px;
+    height:70px;
     border-radius:50%;
-    object-fit:cover;
+    border:3px solid var(--main);
 }
 
 .hero{
     text-align:center;
-    padding:60px 20px;
+    padding:120px 20px;
+    animation:fadeUp 1s ease;
 }
 
 .hero h1{
-    font-size:36px;
+    font-size:48px;
 }
 
 .hero p{
-    margin-top:10px;
+    margin-top:15px;
     color:#555;
 }
 
-.products{
-    padding:40px;
+.section{
+    padding:80px 40px;
     text-align:center;
 }
 
-.product-card{
-    border:1px solid #eee;
-    padding:20px;
-    border-radius:12px;
-    max-width:400px;
+.card{
+    max-width:500px;
     margin:auto;
+    border-radius:16px;
+    padding:30px;
+    border:1px solid #eee;
+    transition:0.3s;
 }
 
-.product-card h2{
-    margin-bottom:10px;
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
 }
 
 .price{
-    margin:10px 0;
+    margin:15px 0;
     color:var(--main);
+    font-size:18px;
 }
 
-.socials{
-    margin-top:20px;
+.btn{
+    padding:12px 25px;
+    background:var(--main);
+    border:none;
+    border-radius:25px;
+    color:white;
+    cursor:pointer;
 }
 
-.socials a{
-    margin:0 10px;
-    text-decoration:none;
-    color:black;
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:30px;
+    margin-top:40px;
+}
+
+.box{
+    padding:20px;
+    border-radius:12px;
+    background:#f9f9f9;
+    transition:0.3s;
+}
+
+.box:hover{
+    transform:translateY(-5px);
 }
 
 footer{
-    margin-top:60px;
-    padding:40px;
-    background:#f7f7f7;
+    margin-top:80px;
+    padding:50px;
+    background:#f5f5f5;
 }
 
 .footer-grid{
@@ -127,9 +159,10 @@ footer{
     gap:20px;
 }
 
-.footer-title{
-    font-weight:bold;
-    margin-bottom:10px;
+.socials a{
+    margin-right:10px;
+    text-decoration:none;
+    color:black;
 }
 
 .lang-switch{
@@ -143,14 +176,20 @@ footer{
     cursor:pointer;
 }
 
-.btn{
-    margin-top:15px;
-    padding:10px 20px;
-    border:none;
-    background:var(--main);
-    color:white;
-    border-radius:20px;
-    cursor:pointer;
+.fade{
+    opacity:0;
+    transform:translateY(40px);
+    transition:1s;
+}
+
+.fade.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+@keyframes fadeUp{
+    from{opacity:0; transform:translateY(40px);}
+    to{opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
@@ -158,13 +197,13 @@ footer{
 <body>
 
 <div id="loader">
+    <img class="loader-logo" src="https://raw.githubusercontent.com/mopelany/website/refs/heads/main/assets/picture/MPLN_LOGO_WHITE.jpg">
     <div class="loader-circle"></div>
 </div>
 
 <header>
     <div class="logo">
-        <img src="https://raw.githubusercontent.com/mopelany/website/refs/heads/main/assets/picture/MPLN_LOGO_WHITE.jpg" alt="logo">
-        <h2>Mopelany</h2>
+        <img src="https://raw.githubusercontent.com/mopelany/website/refs/heads/main/assets/picture/MPLN_LOGO_WHITE.jpg">
     </div>
 </header>
 
@@ -173,46 +212,60 @@ footer{
     <p id="subtitle">Clear skin starts here</p>
 </section>
 
-<section class="products">
-    <div class="product-card">
-        <h2>Mopelany Complete Anti Acne Serum</h2>
+<section class="section fade">
+    <h2>About Product</h2>
+    <p>High quality anti-acne serum designed to reduce pimples, calm skin and improve clarity.</p>
+</section>
 
+<section class="section fade">
+    <h2>Benefits</h2>
+    <div class="grid">
+        <div class="box">Reduce acne</div>
+        <div class="box">Smooth skin</div>
+        <div class="box">Brighten face</div>
+    </div>
+</section>
+
+<section class="section fade">
+    <h2>Pricing</h2>
+    <div class="card">
         <div class="price" id="price">
             1 bottle: 275฿ <br>
             2 bottles: 520฿ <br>
             3 bottles: 699฿
         </div>
-
-        <p id="time">Open daily 10:00 - 16:00</p>
-
         <button class="btn">Buy Now</button>
+    </div>
+</section>
 
-        <div class="socials">
-            <a href="https://www.facebook.com/share/18n7NXBFBJ/?mibextid=wwXIfr">Facebook</a>
-            <a href="https://th.shp.ee/tNYukGMe">Shopee</a>
-            <a href="https://www.tiktok.com/@mopelany.p">TikTok</a>
-            <a href="https://www.instagram.com/mopelany">Instagram</a>
-        </div>
+<section class="section fade">
+    <h2>Contact</h2>
+    <p id="time">Open daily 10:00 - 16:00</p>
+    <p>093-103-7501</p>
+    <p>mopelany.p@gmail.com</p>
+    <div class="socials">
+        <a href="https://www.facebook.com/share/18n7NXBFBJ/?mibextid=wwXIfr">Facebook</a>
+        <a href="https://th.shp.ee/tNYukGMe">Shopee</a>
+        <a href="https://www.tiktok.com/@mopelany.p">TikTok</a>
+        <a href="https://www.instagram.com/mopelany">Instagram</a>
     </div>
 </section>
 
 <footer>
     <div class="footer-grid">
         <div>
-            <div class="footer-title">CONTACT</div>
+            <b>CONTACT</b>
             <p>093-103-7501</p>
             <p>mopelany.p@gmail.com</p>
         </div>
-
         <div>
-            <div class="footer-title">PRODUCT</div>
+            <b>PRODUCT</b>
             <p>Anti Acne Serum</p>
         </div>
-
         <div>
-            <div class="footer-title">HELP</div>
-            <p>Contact Us</p>
-            <p>Returns</p>
+            <b>HELP</b>
+            <p>Contact</p>
+            <p>Refund</p>
         </div>
     </div>
 </footer>
@@ -224,9 +277,21 @@ footer{
 <script>
 window.onload = () => {
     setTimeout(()=>{
-        document.getElementById("loader").style.display="none";
-    },1000);
+        document.getElementById("loader").style.opacity="0";
+        setTimeout(()=>{document.getElementById("loader").style.display="none";},500);
+    },1200);
 };
+
+const faders = document.querySelectorAll('.fade');
+
+window.addEventListener('scroll', ()=>{
+    faders.forEach(el=>{
+        const top = el.getBoundingClientRect().top;
+        if(top < window.innerHeight - 100){
+            el.classList.add('show');
+        }
+    });
+});
 
 let isThai = false;
 
