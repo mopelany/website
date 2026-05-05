@@ -24,65 +24,74 @@ body{
     color:var(--text);
     overflow-x:hidden;
     opacity:0;
-    transition:opacity 0.8s ease;
+    filter:blur(8px);
+    transition:opacity 1s ease, filter 1s ease;
 }
 
 body.show{
     opacity:1;
+    filter:blur(0);
 }
 
 #loader{
     position:fixed;
     width:100%;
     height:100%;
-    background:#eaf6fb;
+    background:var(--bg);
     display:flex;
     justify-content:center;
     align-items:center;
-    z-index:999;
     flex-direction:column;
+    z-index:999;
     opacity:1;
-    transition:opacity 0.8s ease, visibility 0.8s ease;
+    transition:opacity 1s ease;
 }
 
 #loader.hide{
     opacity:0;
-    visibility:hidden;
 }
 
 .loader-logo{
-    width:110px;
-    height:110px;
+    width:120px;
+    height:120px;
     border-radius:50%;
     border:3px solid var(--main);
     object-fit:cover;
-    margin-bottom:25px;
+    margin-bottom:30px;
+    opacity:0;
+    animation:logoFade 0.8s ease forwards;
+    animation-delay:0.3s;
 }
 
-.loader-text{
-    font-size:14px;
-    color:#555;
-    margin-bottom:20px;
-    letter-spacing:2px;
-}
-
-.loader-bar-container{
-    width:200px;
-    height:3px;
-    background:#dbeef5;
-    overflow:hidden;
+@keyframes logoFade{
+    to{opacity:1;}
 }
 
 .loader-bar{
+    width:220px;
+    height:2px;
+    background:#dbeef5;
+    overflow:hidden;
+    opacity:0;
+    animation:fadeBar 0.5s forwards;
+    animation-delay:0.6s;
+}
+
+@keyframes fadeBar{
+    to{opacity:1;}
+}
+
+.loader-bar-inner{
     width:40%;
     height:100%;
     background:var(--main);
-    animation:loading 1.2s ease infinite;
+    animation:loadMove 1.4s ease infinite;
+    animation-delay:0.6s;
 }
 
-@keyframes loading{
-    0%{transform:translateX(-100%);}
-    100%{transform:translateX(300%);}
+@keyframes loadMove{
+    0%{transform:translateX(-120%)}
+    100%{transform:translateX(300%)}
 }
 
 header{
@@ -101,22 +110,49 @@ header{
 
 .hero{
     text-align:center;
-    padding:120px 20px;
-    animation:fadeUp 1s ease;
+    padding:140px 20px;
 }
 
-.hero h1{
-    font-size:48px;
+.hero h1 span{
+    display:inline-block;
+    opacity:0;
+    transform:translateY(40px);
+    animation:reveal 0.8s forwards;
 }
+
+.hero h1 span:nth-child(2){animation-delay:0.2s}
+.hero h1 span:nth-child(3){animation-delay:0.4s}
+.hero h1 span:nth-child(4){animation-delay:0.6s}
 
 .hero p{
     margin-top:15px;
     color:#555;
+    opacity:0;
+    animation:fadeIn 1s 1s forwards;
+}
+
+@keyframes reveal{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes fadeIn{
+    to{opacity:1}
 }
 
 .section{
-    padding:80px 40px;
+    padding:100px 40px;
     text-align:center;
+    opacity:0;
+    transform:translateY(60px);
+    transition:1s cubic-bezier(.22,1,.36,1);
+}
+
+.section.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
 .card{
@@ -126,12 +162,12 @@ header{
     padding:30px;
     border:1px solid #eee;
     background:white;
-    transition:0.3s;
+    transition:0.4s;
 }
 
 .card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:0 20px 40px rgba(0,0,0,0.08);
 }
 
 .price{
@@ -157,19 +193,19 @@ header{
 }
 
 .box{
-    padding:20px;
+    padding:25px;
     border-radius:12px;
     background:white;
-    transition:0.3s;
+    transition:0.4s;
 }
 
 .box:hover{
-    transform:translateY(-5px);
+    transform:translateY(-8px);
 }
 
 footer{
-    margin-top:80px;
-    padding:50px;
+    margin-top:100px;
+    padding:60px;
     background:#dff1f7;
 }
 
@@ -177,12 +213,6 @@ footer{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
     gap:20px;
-}
-
-.socials a{
-    margin-right:10px;
-    text-decoration:none;
-    color:black;
 }
 
 .lang-switch{
@@ -195,22 +225,6 @@ footer{
     border-radius:20px;
     cursor:pointer;
 }
-
-.fade{
-    opacity:0;
-    transform:translateY(40px);
-    transition:1s;
-}
-
-.fade.show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-@keyframes fadeUp{
-    from{opacity:0; transform:translateY(40px);}
-    to{opacity:1; transform:translateY(0);}
-}
 </style>
 </head>
 
@@ -218,9 +232,8 @@ footer{
 
 <div id="loader">
     <img class="loader-logo" src="https://raw.githubusercontent.com/mopelany/website/refs/heads/main/assets/picture/MPLN_LOGO_WHITE.jpg">
-    <div class="loader-text">LOADING</div>
-    <div class="loader-bar-container">
-        <div class="loader-bar"></div>
+    <div class="loader-bar">
+        <div class="loader-bar-inner"></div>
     </div>
 </div>
 
@@ -231,16 +244,21 @@ footer{
 </header>
 
 <section class="hero">
-    <h1 id="title">Mopelany Anti Acne Serum</h1>
-    <p id="subtitle">Clear skin starts here</p>
+    <h1>
+        <span>Mopelany</span>
+        <span>Anti</span>
+        <span>Acne</span>
+        <span>Serum</span>
+    </h1>
+    <p>Clear skin starts here</p>
 </section>
 
-<section class="section fade">
+<section class="section">
     <h2>About Product</h2>
-    <p>High quality anti-acne serum designed to reduce pimples, calm skin and improve clarity.</p>
+    <p>High quality anti-acne serum designed to reduce pimples and improve clarity.</p>
 </section>
 
-<section class="section fade">
+<section class="section">
     <h2>Benefits</h2>
     <div class="grid">
         <div class="box">Reduce acne</div>
@@ -249,28 +267,15 @@ footer{
     </div>
 </section>
 
-<section class="section fade">
+<section class="section">
     <h2>Pricing</h2>
     <div class="card">
-        <div class="price" id="price">
+        <div class="price">
             1 bottle: 275฿ <br>
             2 bottles: 520฿ <br>
             3 bottles: 699฿
         </div>
         <button class="btn">Buy Now</button>
-    </div>
-</section>
-
-<section class="section fade">
-    <h2>Contact</h2>
-    <p id="time">Open daily 10:00 - 16:00</p>
-    <p>093-103-7501</p>
-    <p>mopelany.p@gmail.com</p>
-    <div class="socials">
-        <a href="https://www.facebook.com/share/18n7NXBFBJ/?mibextid=wwXIfr">Facebook</a>
-        <a href="https://th.shp.ee/tNYukGMe">Shopee</a>
-        <a href="https://www.tiktok.com/@mopelany.p">TikTok</a>
-        <a href="https://www.instagram.com/mopelany">Instagram</a>
     </div>
 </section>
 
@@ -285,60 +290,29 @@ footer{
             <b>PRODUCT</b>
             <p>Anti Acne Serum</p>
         </div>
-        <div>
-            <b>HELP</b>
-            <p>Contact</p>
-            <p>Refund</p>
-        </div>
     </div>
 </footer>
 
-<div class="lang-switch" onclick="toggleLang()">
-    ENG | ไทย
-</div>
+<div class="lang-switch">ENG | ไทย</div>
 
 <script>
 window.onload = () => {
     setTimeout(()=>{
         document.getElementById("loader").classList.add("hide");
         document.body.classList.add("show");
-    },3000);
+    },3200);
 };
 
-const faders = document.querySelectorAll('.fade');
+const sections = document.querySelectorAll('.section');
 
 window.addEventListener('scroll', ()=>{
-    faders.forEach(el=>{
+    sections.forEach(el=>{
         const top = el.getBoundingClientRect().top;
         if(top < window.innerHeight - 100){
             el.classList.add('show');
         }
     });
 });
-
-let isThai = false;
-
-function toggleLang(){
-    isThai = !isThai;
-
-    if(isThai){
-        document.getElementById("title").innerText = "เซรั่มรักษาสิว Mopelany";
-        document.getElementById("subtitle").innerText = "ผิวใสเริ่มต้นที่นี่";
-        document.getElementById("price").innerHTML = `
-        1 ขวด: 275฿ <br>
-        2 ขวด: 520฿ <br>
-        3 ขวด: 699฿`;
-        document.getElementById("time").innerText = "เปิดทุกวัน 10:00 - 16:00";
-    }else{
-        document.getElementById("title").innerText = "Mopelany Anti Acne Serum";
-        document.getElementById("subtitle").innerText = "Clear skin starts here";
-        document.getElementById("price").innerHTML = `
-        1 bottle: 275฿ <br>
-        2 bottles: 520฿ <br>
-        3 bottles: 699฿`;
-        document.getElementById("time").innerText = "Open daily 10:00 - 16:00";
-    }
-}
 </script>
 
 </body>
