@@ -26,15 +26,14 @@ body{
     color:var(--text);
     overflow-x:hidden;
     opacity:0;
-    transform:scale(1.03);
-    transition:1.2s cubic-bezier(.22,1,.36,1);
+    transition:1s;
 }
 
 body.show{
     opacity:1;
-    transform:scale(1);
 }
 
+/* LOADER */
 #loader{
     position:fixed;
     inset:0;
@@ -44,31 +43,25 @@ body.show{
     align-items:center;
     flex-direction:column;
     z-index:999;
-    transition:1s;
+    transition:0.6s;
 }
 
 #loader.hide{
     opacity:0;
-    transform:scale(1.1);
+    pointer-events:none;
 }
 
 .loader-logo{
-    width:140px;
-    height:140px;
+    width:110px;
+    height:110px;
     border-radius:50%;
-    border:3px solid var(--main);
+    border:2px solid var(--main);
     object-fit:cover;
-    margin-bottom:30px;
-    animation:float 2s ease-in-out infinite;
-}
-
-@keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-12px)}
+    margin-bottom:20px;
 }
 
 .loader-bar{
-    width:260px;
+    width:200px;
     height:2px;
     background:#dceff6;
     overflow:hidden;
@@ -78,40 +71,59 @@ body.show{
     width:40%;
     height:100%;
     background:var(--main);
-    animation:bar 1.4s ease infinite;
+    animation:bar 1s linear infinite;
 }
 
 @keyframes bar{
-    0%{transform:translateX(-120%)}
-    100%{transform:translateX(300%)}
+    0%{transform:translateX(-100%)}
+    100%{transform:translateX(250%)}
 }
 
-header{
+/* TOP PROGRESS */
+.top-bar{
     position:fixed;
-    width:100%;
     top:0;
     left:0;
-    padding:20px 60px;
+    height:2px;
+    width:0%;
+    background:var(--main);
+    z-index:1000;
+}
+
+/* NAV */
+header{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:10px 40px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    backdrop-filter:blur(12px);
+    backdrop-filter:blur(10px);
     background:rgba(255,255,255,0.5);
-    z-index:10;
+    z-index:999;
 }
 
 .logo img{
-    width:75px;
-    height:75px;
+    width:55px;
+    height:55px;
     border-radius:50%;
     border:2px solid var(--main);
-    transition:0.4s;
 }
 
-.logo img:hover{
-    transform:scale(1.1);
+.nav{
+    display:flex;
+    gap:20px;
 }
 
+.nav button{
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-size:14px;
+}
+
+/* HERO */
 .hero{
     height:100vh;
     display:flex;
@@ -122,132 +134,69 @@ header{
 }
 
 .hero h1{
-    font-size:58px;
-}
-
-.hero h1 span{
-    display:inline-block;
-    opacity:0;
-    transform:translateY(60px);
-    animation:reveal 1s forwards;
-}
-
-.hero h1 span:nth-child(2){animation-delay:0.2s}
-.hero h1 span:nth-child(3){animation-delay:0.4s}
-.hero h1 span:nth-child(4){animation-delay:0.6s}
-
-@keyframes reveal{
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-.hero p{
-    margin-top:20px;
-    color:#555;
-    opacity:0;
-    animation:fade 1s 1s forwards;
-}
-
-@keyframes fade{
-    to{opacity:1}
+    font-size:50px;
 }
 
 .section{
-    padding:120px 20px;
+    padding:100px 20px;
     text-align:center;
 }
 
 .title{
-    font-size:34px;
-    margin-bottom:30px;
-    opacity:0;
-    transform:translateY(50px);
-    transition:0.9s cubic-bezier(.22,1,.36,1);
+    font-size:30px;
+    margin-bottom:20px;
 }
 
-.title.show{
-    opacity:1;
-    transform:translateY(0);
-}
-
-.text-block{
-    max-width:750px;
+.text{
+    max-width:700px;
     margin:auto;
-    line-height:1.8;
     color:#444;
-    opacity:0;
-    transform:translateY(50px);
-    transition:1s cubic-bezier(.22,1,.36,1);
-}
-
-.text-block.show{
-    opacity:1;
-    transform:translateY(0);
+    line-height:1.7;
 }
 
 .cards{
     display:flex;
     flex-wrap:wrap;
     justify-content:center;
-    gap:30px;
-    margin-top:50px;
+    gap:20px;
+    margin-top:30px;
 }
 
 .card{
-    width:300px;
-    padding:35px;
+    width:260px;
     background:white;
-    border-radius:18px;
-    opacity:0;
-    transform:translateY(70px) scale(0.95);
-    transition:0.6s cubic-bezier(.22,1,.36,1);
+    padding:25px;
+    border-radius:14px;
 }
 
-.card.show{
-    opacity:1;
-    transform:translateY(0) scale(1);
-}
-
-.card:hover{
-    transform:translateY(-14px) scale(1.04);
-    box-shadow:0 30px 60px rgba(0,0,0,0.08);
-}
-
-.pricing-card{
+.pricing{
+    background:white;
     display:inline-block;
-    background:white;
-    padding:45px;
-    border-radius:24px;
-    opacity:0;
-    transform:translateY(60px);
-    transition:0.7s cubic-bezier(.22,1,.36,1);
-}
-
-.pricing-card.show{
-    opacity:1;
-    transform:translateY(0);
+    padding:30px;
+    border-radius:16px;
 }
 
 .btn{
-    margin-top:25px;
-    padding:14px 35px;
+    margin-top:20px;
+    padding:10px 25px;
     border:none;
-    border-radius:30px;
     background:var(--main);
     color:white;
+    border-radius:20px;
     cursor:pointer;
-    transition:0.3s;
 }
 
-.btn:hover{
-    transform:scale(1.1);
-}
-
-.parallax{
-    transform:translateY(0);
-    transition:transform 0.2s linear;
+/* LANG SWITCH */
+.lang{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:white;
+    border:1px solid #ccc;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:pointer;
+    z-index:1000;
 }
 </style>
 </head>
@@ -256,135 +205,103 @@ header{
 
 <div id="loader">
     <img class="loader-logo" src="https://raw.githubusercontent.com/mopelany/website/refs/heads/main/assets/picture/MPLN_LOGO_WHITE.jpg">
-    <div class="loader-bar">
-        <div class="loader-bar-inner"></div>
-    </div>
+    <div class="loader-bar"><div class="loader-bar-inner"></div></div>
 </div>
+
+<div class="top-bar" id="topBar"></div>
 
 <header>
     <div class="logo">
         <img src="https://raw.githubusercontent.com/mopelany/website/refs/heads/main/assets/picture/MPLN_LOGO_WHITE.jpg">
     </div>
+
+    <div class="nav">
+        <button onclick="scrollToId('hero')">Home</button>
+        <button onclick="scrollToId('science')">Science</button>
+        <button onclick="scrollToId('active')">Active</button>
+        <button onclick="scrollToId('price')">Price</button>
+        <button onclick="scrollToId('contact')">Contact</button>
+    </div>
 </header>
 
-<section class="hero parallax">
-    <h1>
-        <span>Mopelany</span>
-        <span>Anti</span>
-        <span>Acne</span>
-        <span>Serum</span>
-    </h1>
-    <p>Clear skin starts here</p>
+<section class="hero" id="hero">
+    <h1 id="title">Mopelany Anti Acne Serum</h1>
+    <p id="subtitle">Clear skin starts here</p>
 </section>
 
-<section class="section">
+<section class="section" id="science">
     <h2 class="title">Product Science</h2>
-    <div class="text-block">
-        สิว (Acne vulgaris) เป็นภาวะอักเสบเรื้อรังของผิวหนังที่มีพยาธิกำเนิดหลายปัจจัย ประกอบด้วยการทำงานของต่อมไขมัน ความผิดปกติของการผลัดเซลล์ผิว การเพิ่มจำนวนของเชื้อ Cutibacterium acnes และกระบวนการอักเสบระดับเซลล์
+    <div class="text" id="scienceText">
+        Acne is a chronic inflammatory condition involving sebum, bacteria, and skin cell turnover.
     </div>
 </section>
 
-<section class="section">
+<section class="section" id="active">
     <h2 class="title">Active Complex</h2>
     <div class="cards">
-        <div class="card">
-            <h3>AcneBusters®</h3>
-            <p>ควบคุมการทำงานของต่อมไขมัน ลดการอักเสบ และยับยั้งแบคทีเรีย</p>
-        </div>
-        <div class="card">
-            <h3>Encap Salicylic</h3>
-            <p>ซาลิไซลิกนาโน ลดการอุดตัน ผลัดเซลล์อย่างสม่ำเสมอ</p>
-        </div>
-        <div class="card">
-            <h3>OUBAKU Extract</h3>
-            <p>ลดเชื้อสิว ลดการอักเสบ และรักษาสมดุลผิว</p>
-        </div>
+        <div class="card">AcneBusters®</div>
+        <div class="card">Encap Salicylic</div>
+        <div class="card">OUBAKU Extract</div>
     </div>
 </section>
 
-<section class="section">
-    <h2 class="title">Synergistic Effect</h2>
-    <div class="text-block">
-        การทำงานร่วมกันของสารสำคัญช่วยควบคุมสิวทุกระดับ ลดโอกาสการเกิดซ้ำในระยะยาว
-    </div>
-</section>
-
-<section class="section">
+<section class="section" id="price">
     <h2 class="title">Pricing</h2>
-    <div class="pricing-card">
-        <div>1 bottle — 275฿</div>
-        <div>2 bottles — 520฿</div>
-        <div>3 bottles — 699฿</div>
+    <div class="pricing">
+        <div id="priceText">
+            1 bottle — 275฿ <br>
+            2 bottles — 520฿ <br>
+            3 bottles — 699฿
+        </div>
         <button class="btn">Buy Now</button>
     </div>
 </section>
-<footer class="section">
+
+<section class="section" id="contact">
     <h2 class="title">Contact</h2>
-    <div class="text-block">
+    <div class="text">
         093-103-7501<br>
         mopelany.p@gmail.com
     </div>
+</section>
 
-    <div class="cards">
-        <div class="card"><a href="https://www.facebook.com/share/18n7NXBFBJ/?mibextid=wwXIfr">Facebook</a></div>
-        <div class="card"><a href="https://th.shp.ee/tNYukGMe">Shopee</a></div>
-        <div class="card"><a href="https://www.tiktok.com/@mopelany.p">TikTok</a></div>
-        <div class="card"><a href="https://www.instagram.com/mopelany">Instagram</a></div>
-    </div>
-</footer>
-
-<div class="lang-switch" id="langSwitch">ENG | ไทย</div>
+<div class="lang" onclick="toggleLang()">ENG | ไทย</div>
 
 <script>
-window.onload = () => {
+window.onload = ()=>{
     setTimeout(()=>{
         document.getElementById("loader").classList.add("hide");
         document.body.classList.add("show");
-    },3200);
+    },1200);
 };
 
-const elements = document.querySelectorAll('.title, .text-block, .card, .pricing-card');
+function scrollToId(id){
+    document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
 
-window.addEventListener('scroll', ()=>{
-    elements.forEach(el=>{
-        const top = el.getBoundingClientRect().top;
-        if(top < window.innerHeight - 80){
-            el.classList.add('show');
-        }
-    });
-
-    document.querySelectorAll('.parallax').forEach(el=>{
-        let offset = window.scrollY * 0.2;
-        el.style.transform = `translateY(${offset}px)`;
-    });
+window.addEventListener("scroll", ()=>{
+    let scroll = window.scrollY;
+    let height = document.body.scrollHeight - window.innerHeight;
+    document.getElementById("topBar").style.width = (scroll/height)*100 + "%";
 });
 
-const btns = document.querySelectorAll('.btn');
+let thai=false;
 
-btns.forEach(btn=>{
-    btn.addEventListener('mousemove', e=>{
-        const rect = btn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width/2;
-        const y = e.clientY - rect.top - rect.height/2;
-        btn.style.transform = `translate(${x*0.1}px, ${y*0.1}px) scale(1.08)`;
-    });
+function toggleLang(){
+    thai=!thai;
 
-    btn.addEventListener('mouseleave', ()=>{
-        btn.style.transform = 'scale(1)';
-    });
-});
-
-let isThai = false;
-
-document.getElementById("langSwitch").onclick = ()=>{
-    isThai = !isThai;
-
-    if(isThai){
-        document.querySelector('.hero p').innerText = "ผิวใสเริ่มต้นที่นี่";
+    if(thai){
+        document.getElementById("title").innerText="เซรั่มรักษาสิว Mopelany";
+        document.getElementById("subtitle").innerText="ผิวใสเริ่มต้นที่นี่";
+        document.getElementById("scienceText").innerText="สิวเป็นภาวะอักเสบของผิวหนังที่เกี่ยวข้องกับต่อมไขมันและแบคทีเรีย";
+        document.getElementById("priceText").innerHTML="1 ขวด — 275฿<br>2 ขวด — 520฿<br>3 ขวด — 699฿";
     }else{
-        document.querySelector('.hero p').innerText = "Clear skin starts here";
+        document.getElementById("title").innerText="Mopelany Anti Acne Serum";
+        document.getElementById("subtitle").innerText="Clear skin starts here";
+        document.getElementById("scienceText").innerText="Acne is a chronic inflammatory condition involving sebum, bacteria, and skin cell turnover.";
+        document.getElementById("priceText").innerHTML="1 bottle — 275฿<br>2 bottles — 520฿<br>3 bottles — 699฿";
     }
-};
+}
 </script>
 
 </body>
