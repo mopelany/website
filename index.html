@@ -35,6 +35,30 @@ body.show{
     transform:scale(1);
 }
 
+#langSelect{
+    position:fixed;
+    inset:0;
+    background:var(--bg);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:2000;
+}
+
+.lang-box{
+    text-align:center;
+}
+
+.lang-box button{
+    margin:10px;
+    padding:12px 25px;
+    border:none;
+    background:var(--main);
+    color:white;
+    border-radius:25px;
+    cursor:pointer;
+}
+
 #loader{
     position:fixed;
     inset:0;
@@ -43,13 +67,19 @@ body.show{
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    z-index:999;
+    z-index:1500;
+    opacity:0;
+    pointer-events:none;
     transition:0.6s;
+}
+
+#loader.show{
+    opacity:1;
+    pointer-events:auto;
 }
 
 #loader.hide{
     opacity:0;
-    pointer-events:none;
 }
 
 .loader-logo{
@@ -240,22 +270,18 @@ header{
 .btn:hover{
     transform:scale(1.1);
 }
-
-.lang-switch{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:white;
-    border:1px solid #ccc;
-    padding:8px 14px;
-    border-radius:20px;
-    cursor:pointer;
-    z-index:1000;
-}
 </style>
 </head>
 
 <body>
+
+<div id="langSelect">
+    <div class="lang-box">
+        <h2>Select Language</h2>
+        <button onclick="setLang('en')">English</button>
+        <button onclick="setLang('th')">ไทย</button>
+    </div>
+</div>
 
 <div id="loader">
     <img class="loader-logo" src="https://raw.githubusercontent.com/mopelany/website/refs/heads/main/assets/picture/MPLN_LOGO_WHITE.jpg">
@@ -275,6 +301,7 @@ header{
         <button onclick="scrollToId('hero')" id="navHome">Home</button>
         <button onclick="scrollToId('science')" id="navScience">Science</button>
         <button onclick="scrollToId('active')" id="navActive">Active</button>
+        <button onclick="scrollToId('effect')" id="navEffect">Effect</button>
         <button onclick="scrollToId('price')" id="navPrice">Price</button>
         <button onclick="scrollToId('contact')" id="navContact">Contact</button>
     </div>
@@ -316,7 +343,7 @@ header{
 <section class="section" id="effect">
     <h2 class="title" id="effectTitle">Synergistic Effect</h2>
     <div class="text" id="effectText">
-        Combined ingredients target all acne causes including oil glands, pores, bacteria, and inflammation for long-term results.
+        Combined ingredients target all acne causes including oil glands, pores, bacteria, and inflammation.
     </div>
 </section>
 
@@ -340,15 +367,24 @@ header{
         Email: mopelany.p@gmail.com
     </div>
 </section>
-
-<div class="lang-switch" id="langSwitch">ENG | ไทย</div>
 <script>
-window.onload = ()=>{
+let currentLang = null;
+
+function setLang(lang){
+    currentLang = lang;
+    document.getElementById("langSelect").style.display = "none";
+    document.getElementById("loader").classList.add("show");
+    startSite();
+}
+
+function startSite(){
+    applyLang();
+
     setTimeout(()=>{
         document.getElementById("loader").classList.add("hide");
         document.body.classList.add("show");
     },1500);
-};
+}
 
 function scrollToId(id){
     document.getElementById(id).scrollIntoView({behavior:"smooth"});
@@ -363,20 +399,19 @@ window.addEventListener("scroll", ()=>{
         let top = el.getBoundingClientRect().top;
         if(top < window.innerHeight - 80){
             el.classList.add("show");
+        }else{
+            el.classList.remove("show");
         }
     });
 });
 
-let thai = false;
-
-document.getElementById("langSwitch").onclick = ()=>{
-    thai = !thai;
-
-    if(thai){
+function applyLang(){
+    if(currentLang === "th"){
 
         document.getElementById("navHome").innerText="หน้าแรก";
         document.getElementById("navScience").innerText="ข้อมูล";
         document.getElementById("navActive").innerText="สารสำคัญ";
+        document.getElementById("navEffect").innerText="การทำงาน";
         document.getElementById("navPrice").innerText="ราคา";
         document.getElementById("navContact").innerText="ติดต่อ";
 
@@ -406,6 +441,7 @@ document.getElementById("langSwitch").onclick = ()=>{
         document.getElementById("navHome").innerText="Home";
         document.getElementById("navScience").innerText="Science";
         document.getElementById("navActive").innerText="Active";
+        document.getElementById("navEffect").innerText="Effect";
         document.getElementById("navPrice").innerText="Price";
         document.getElementById("navContact").innerText="Contact";
 
@@ -430,7 +466,7 @@ document.getElementById("langSwitch").onclick = ()=>{
         document.getElementById("contactTitle").innerText="Contact";
         document.getElementById("contactText").innerHTML="Phone: 093-103-7501<br>Email: mopelany.p@gmail.com";
     }
-};
+}
 </script>
 
 </body>
