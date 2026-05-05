@@ -8,7 +8,7 @@
 <style>
 :root{
     --main:#a7d1df;
-    --bg:#f5fbfe;
+    --bg:#eaf6fb;
     --text:#111;
 }
 
@@ -35,7 +35,7 @@ body.show{
     position:fixed;
     width:100%;
     height:100%;
-    background:#f5fbfe;
+    background:#eaf6fb;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -51,27 +51,38 @@ body.show{
 }
 
 .loader-logo{
-    width:100px;
-    height:100px;
+    width:110px;
+    height:110px;
     border-radius:50%;
     border:3px solid var(--main);
     object-fit:cover;
-    margin-bottom:40px;
+    margin-bottom:25px;
+}
+
+.loader-text{
+    font-size:14px;
+    color:#555;
+    margin-bottom:20px;
+    letter-spacing:2px;
+}
+
+.loader-bar-container{
+    width:200px;
+    height:3px;
+    background:#dbeef5;
+    overflow:hidden;
 }
 
 .loader-bar{
-    position:absolute;
-    top:0;
-    left:0;
-    width:0%;
-    height:3px;
+    width:40%;
+    height:100%;
     background:var(--main);
-    animation:loadBar 2.5s ease forwards;
+    animation:loading 1.2s ease infinite;
 }
 
-@keyframes loadBar{
-    0%{width:0%;}
-    100%{width:100%;}
+@keyframes loading{
+    0%{transform:translateX(-100%);}
+    100%{transform:translateX(300%);}
 }
 
 header{
@@ -159,7 +170,7 @@ header{
 footer{
     margin-top:80px;
     padding:50px;
-    background:#eef7fb;
+    background:#dff1f7;
 }
 
 .footer-grid{
@@ -206,8 +217,11 @@ footer{
 <body>
 
 <div id="loader">
-    <div class="loader-bar"></div>
     <img class="loader-logo" src="https://raw.githubusercontent.com/mopelany/website/refs/heads/main/assets/picture/MPLN_LOGO_WHITE.jpg">
+    <div class="loader-text">LOADING</div>
+    <div class="loader-bar-container">
+        <div class="loader-bar"></div>
+    </div>
 </div>
 
 <header>
@@ -288,7 +302,7 @@ window.onload = () => {
     setTimeout(()=>{
         document.getElementById("loader").classList.add("hide");
         document.body.classList.add("show");
-    },2600);
+    },3000);
 };
 
 const faders = document.querySelectorAll('.fade');
