@@ -41,12 +41,9 @@ body.show{
     background:var(--bg);
     display:flex;
     justify-content:center;
-    align-items:center;
+    align-items:flex-start;
+    padding-top:120px;
     z-index:2000;
-}
-
-.lang-box{
-    text-align:center;
 }
 
 .lang-box button{
@@ -64,9 +61,10 @@ body.show{
     inset:0;
     background:var(--bg);
     display:flex;
-    justify-content:center;
-    align-items:center;
     flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding-top:140px;
     z-index:1500;
     opacity:0;
     pointer-events:none;
@@ -80,6 +78,7 @@ body.show{
 
 #loader.hide{
     opacity:0;
+    pointer-events:none;
 }
 
 .loader-logo{
@@ -90,6 +89,11 @@ body.show{
     object-fit:cover;
     margin-bottom:25px;
     animation:float 2s ease-in-out infinite;
+}
+
+.lang-box{
+    text-align:center;
+    margin-top:40px;
 }
 
 @keyframes float{
@@ -388,8 +392,13 @@ function startSite(){
     applyLang();
 
     setTimeout(()=>{
-        document.getElementById("loader").classList.add("hide");
-    },1500);
+        const loader = document.getElementById("loader");
+        loader.classList.add("hide");
+
+        setTimeout(()=>{
+            loader.style.display = "none";
+        },800);
+},1800);
 }
 
 function scrollToId(id){
